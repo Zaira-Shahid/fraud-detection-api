@@ -1,5 +1,5 @@
-
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
 import pandas as pd
@@ -10,7 +10,14 @@ from imblearn.over_sampling import SMOTE
 
 app = FastAPI(title="Fraud Detection API")
 
-# Train model on startup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 def train_model():
     np.random.seed(42)
     n = 50000
